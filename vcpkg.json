@@ -1,0 +1,7 @@
+{
+  "name": "cmake-example",
+  "version-string": "0.0.1-dev",
+  "dependencies": [
+    "spdlog"
+  ]
+}  
