@@ -3,9 +3,16 @@ A CMake example project: using c++20, modules and tests (via catch2)
 
 This is repository is wip, a test-bed to learn using CMake.
 
-## Goals
-The current goal is:
-- Set up a good repo structure
+The long term goal is to first get it fully up and running on Windows.
+And then add linux build support by moving the build to docker. 
+
+## Requirements & dependencies
+- cmake + VS2022 (catch2 test adapter extension recommended but not required)
+- vcpkg installed and configure for cmake (env variable CMAKE_TOOLCHAIN_FILE set) 
+    - or another package manager, with corresponding config: see [vcpkg.json](/vcpkg.json) for the used dependencies
+
+## Current goals
+- a good repo structure
 - use cmake to build and test
 - use c++20 source code, incl. modules
 - unittests via catch2
@@ -13,6 +20,6 @@ The current goal is:
 - 'multiplatform' fro now means:
     - compiles with MSVC and clang **on Windows**
     - clang tools (format, tidy, sanitizers) integrated
-    - compiling on Linux should be tackled later by moving the cmake build to docker
+
 
 
