@@ -1,18 +1,18 @@
-#include "myclass.h"
+#include "mainclass.h"
 
 #include <format>
 
-void MyClass::recompute_flag()
+void MainClass::recompute_flag()
 {
 	is_odd = value_is_odd();
 }
 
-std::string MyClass::stringify()
+std::string MainClass::stringify()
 {
 	return std::format("value={}, is_odd={}", value, is_odd);
 }
 
-bool MyClass::value_is_odd()
+bool MainClass::value_is_odd()
 {
 	return value % 2 == 1;
 }

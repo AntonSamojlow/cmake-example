@@ -6,7 +6,7 @@ project ("cmake-example")
 set(CMAKE_CXX_STANDARD 20)
 
 # allows test and other libs to reference src folder directly 
-# (else all includes must start with 'src/' or '../')
+# (else all cross-project includes must start with 'src/' or '../')
 include_directories(src)
 
 # include sub-projects

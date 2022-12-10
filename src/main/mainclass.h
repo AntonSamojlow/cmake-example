@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-struct MyClass
+struct MainClass
 {
 	int value = 0;
 	bool is_odd = false;
