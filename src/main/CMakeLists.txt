@@ -10,7 +10,8 @@ set(SOURCES ${SOURCES})
 # build target main: as executable
 add_executable(main ${SOURCES})
 target_link_libraries(main PRIVATE spdlog::spdlog)
+target_link_libraries(main PRIVATE mylibrary)
 
-# build target main_lin: as lib to be consumed by tests (is therre a better solution?)
+# build target main_lib: as lib to be consumed by tests (is therre a better solution?)
 add_library(main_lib ${SOURCES})
 target_link_libraries(main_lib PRIVATE spdlog::spdlog)
