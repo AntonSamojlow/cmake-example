@@ -2,7 +2,6 @@
 
 #include <spdlog/spdlog.h>
 
-
 #include "main/mainclass.h"
 #include "mylibrary/libclass.h"
 
