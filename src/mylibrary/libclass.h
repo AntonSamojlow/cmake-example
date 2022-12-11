@@ -6,4 +6,5 @@ struct LibClass
 	bool active = false;
 
 	int id() const;
+	void log() const;
 };

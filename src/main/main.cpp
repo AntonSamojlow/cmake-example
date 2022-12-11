@@ -6,11 +6,12 @@
 #include "mylibrary/libclass.h"
 
 import cache;
+import libmodule;
 
 int main()
 {
+	lib::log("hi");
 	auto logger = spdlog::default_logger();
-	logger->info("This is a CMake test project");
 	MainClass classA = { .value = 1 };
 	cache::Add(classA);
 
@@ -22,6 +23,7 @@ int main()
 	logger->info("fetched cached classA: {}", lookup.value().stringify());
 
 	LibClass libclass;
+	libclass.log();
 	logger->info("libclass default values: count={}, active={}", libclass.count, libclass.active);
 
 	return 0;
