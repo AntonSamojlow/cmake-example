@@ -8,12 +8,12 @@ file(GLOB_RECURSE SOURCES LIST_DIRECTORIES true *.h *.cpp *.ixx)
 set(SOURCES ${SOURCES})
 
 # combine dependencies in a variable
-set(DEPENDENCIES "spdlog::spdlog" "mylibrary")
+set(DEPENDENCIES spdlog::spdlog mylibrary)
 
 # build target main: as executable
 add_executable(main ${SOURCES})
-target_link_libraries(main PRIVATE DEPENDENCIES)
+target_link_libraries(main PRIVATE ${DEPENDENCIES})
 
 # build target main_lib: as lib to be consumed by tests (is there a better solution?)
 add_library(main_lib ${SOURCES})
-target_link_libraries(main_lib PRIVATE DEPENDENCIES)
+target_link_libraries(main_lib PRIVATE ${DEPENDENCIES})
