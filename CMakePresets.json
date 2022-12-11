@@ -5,6 +5,7 @@
       "name": "windows-base",
       "hidden": true,
       "generator": "Visual Studio 17 2022",
+      // use msvc instead of Ninja - until the latter has improved its module support
       //"generator": "Ninja",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",

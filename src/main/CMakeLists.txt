@@ -1,4 +1,4 @@
-﻿# cmake file for src
+﻿# cmake file for src/main
 
 # resolve external dependencies (vcpkg)
 find_package(spdlog REQUIRED)
