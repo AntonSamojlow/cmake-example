@@ -12,18 +12,17 @@ int main()
 	auto logger = spdlog::default_logger();
 	logger->info("This is a CMake test project");
 	MainClass classA = { .value = 1 };
-	logger->info("created local classA: {}", classA.stringify());
+	cache::Add(classA);
+
+	logger->info("stored in cache a copy of classA: {}", classA.stringify());
 	classA.recompute_flag();
 	logger->info("recomputed local classA: {}", classA.stringify());
 
+	auto lookup = cache::GetFirst(1);
+	logger->info("fetched cached classA: {}", lookup.value().stringify());
 
-	LibClass libclass = { .count = 2, .active = true };
-	cache::Add(libclass);
-	logger->info("stored in cache a copy of libclass with count={}, active=",
-		libclass.count, libclass.active);
-	auto lookup = cache::GetByMatchingCount(2);
-	logger->info("fetched cached of libclass with count={}, active=",
-		lookup.value().count, lookup.value().active);
+	LibClass libclass;
+	logger->info("libclass default values: count={}, active={}", libclass.count, libclass.active);
 
 	return 0;
 }

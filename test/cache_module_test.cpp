@@ -3,12 +3,12 @@
 import cache;
 
 TEST_CASE("Test module 'cache'", "[cache-module]") {
-	cache::Add({ .count = 11 });
-	cache::Add({ .count = 2 });
-	auto lookup_existing = cache::GetByMatchingCount(11);
+	cache::Add({ .value = 11 });
+	cache::Add({ .value = 2 });
+	auto lookup_existing = cache::GetFirst(11);
 	REQUIRE(lookup_existing.has_value() == true);
-	REQUIRE(lookup_existing.value().count == 11);
-	auto lookup_missing = cache::GetByMatchingCount(1);
+	REQUIRE(lookup_existing.value().value == 11);
+	auto lookup_missing = cache::GetFirst(3);
 	REQUIRE(lookup_missing.has_value() == false);
 }
 
