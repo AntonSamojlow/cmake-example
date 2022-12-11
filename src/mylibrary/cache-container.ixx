@@ -1,10 +1,10 @@
 module;
 #include <vector>
-#include "mainclass.h"
+#include "libclass.h"
 
 export module cache:container;
 
 export struct Container
 {
-	std::vector<MainClass> data;
+	std::vector<LibClass> data;
 };

@@ -1,7 +1,7 @@
 module; // optional. Defines the beginning of the global module fragment; 
 // can be ommitted if no #includes are followed (file starts then with the 'module preamble' below)
 
-#include "mainclass.h"
+#include "libclass.h"
 #include <optional>
 // #include directives go here but only apply to this file and
 // aren't shared with other module implementation files.
@@ -18,8 +18,8 @@ import :container;
 // Put exported functions, types, and templates here
 export namespace cache
 {
-	export void Add(MainClass entry);
-	export std::optional<MainClass> GetFirst(int value);
+	export void Add(LibClass entry);
+	export std::optional<LibClass> GetByMatchingCount(int value);
 }
 
 module :private; // optional. Everything after this point is visible only within this file, and isn't 
