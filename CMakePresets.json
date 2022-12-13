@@ -1,6 +1,8 @@
 ﻿{
   "version": 3,
   "configurePresets": [
+
+    // Windows (MVSC)
     {
       "name": "windows-base",
       "hidden": true,
@@ -59,6 +61,35 @@
         "CMAKE_BUILD_TYPE": "Release"
       }
     },
+
+    // Windows (clang-cl)
+    {
+      "name": "x64-debug-clang-cl",
+      "displayName": "x64 Debug (clan-cl)",
+      "generator": "Visual Studio 17 2022",
+      // use msvc instead of Ninja - until the latter has improved its module support
+      //"generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+        "CMAKE_C_COMPILER": "clang-cl",
+        "CMAKE_CXX_COMPILER": "clang-cl"
+      },
+
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "windows-clang-x64"
+        }
+      }
+    },
+
+    // Linux
     {
       "name": "linux-debug",
       "displayName": "Linux Debug",
@@ -79,6 +110,8 @@
         }
       }
     },
+
+    // MacOs
     {
       "name": "macos-debug",
       "displayName": "macOS Debug",
