@@ -13,14 +13,10 @@ And then add linux build support by moving the build to docker.
 - due to [this bug](https://github.com/microsoft/vcpkg/issues/15623), on Windows it is recommended to set environment variable `VcpkgAutoLink` to `false`
 
 ## Current goals
-- a good repo structure
-- use cmake to build and test
-- use c++20 source code, incl. modules
-- unittests via catch2
-- external dependencies may be installed via vcpkg (using 'manifest mode')
-- 'multiplatform' fro now means:
-    - compiles with MSVC and clang **on Windows**
-    - clang tools (format, tidy, sanitizers) integrated
-
+- compile on windows with both clang and msvc, and ninja as build-generator
+    - currently, this is **blocked** by lacking module support
+- setup github ci
+- add preset for sanitizers and all warnings enabled
+- move build to docker, both for win and linux containers
 
 
