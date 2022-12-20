@@ -4,9 +4,10 @@
 
     // Windows (MVSC)
     {
-      "name": "windows-base",
+      "name": "win-msvc-base",
       "hidden": true,
       "generator": "Ninja",
+      "architecture": { "strategy": "external" },
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
       "cacheVariables": {
@@ -20,62 +21,79 @@
       }
     },
     {
-      "name": "x64-debug",
-      "displayName": "x64 Debug",
-      "inherits": "windows-base",
-      "architecture": {
-        "value": "x64",
-        "strategy": "external"
-      },
+      "name": "x64-debug-msvc",
+      "displayName": "x64 Debug (msvc)",
+      "inherits": "win-msvc-base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
       }
     },
     {
-      "name": "x64-release",
-      "displayName": "x64 Release",
-      "inherits": "x64-debug",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
-      }
-    },
-    {
-      "name": "x86-debug",
-      "displayName": "x86 Debug",
-      "inherits": "windows-base",
-      "architecture": {
-        "value": "x86",
-        "strategy": "external"
-      },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
-      }
-    },
-    {
-      "name": "x86-release",
-      "displayName": "x86 Release",
-      "inherits": "x86-debug",
+      "name": "x64-release-msvc",
+      "displayName": "x64 Release (msvc)",
+      "inherits": "win-msvc-base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
       }
     },
 
+    // using Visual Studio generator: supports arrchitecture choice x86/x64 
+    //{
+    //  "name": "win-msvc-vs-x86",
+    //  "hidden": true,
+    //  "inherits": "win-msvc-base",
+    //  "generator": "Visual Studio 17 2022",
+    //  "architecture": { "value": "x86" }
+    //},
+    //{
+    //  "name": "win-msvc-vs-x64",
+    //  "hidden": true,
+    //  "inherits": "win-msvc-base",
+    //  "generator": "Visual Studio 17 2022",
+    //  "architecture": { "value": "x64" }
+    //},
+    //{
+    //  "name": "x64-debug-msvc",
+    //  "displayName": "x64 Debug (msvc)",
+    //  "inherits": "win-msvc-vs-x64",
+    //  "cacheVariables": {
+    //    "CMAKE_BUILD_TYPE": "Debug"
+    //  }
+    //},
+    //{
+    //  "name": "x64-release",
+    //  "displayName": "x64 Release (msvc)",
+    //  "inherits": "win-msvc-vs-x64",
+    //  "cacheVariables": {
+    //    "CMAKE_BUILD_TYPE": "Release"
+    //  }
+    //},
+    //{
+    //  "name": "x86-debug-msvc",
+    //  "displayName": "x86 Debug (msvc)",
+    //  "inherits": "win-msvc-vs-x86",
+    //  "cacheVariables": {
+    //    "CMAKE_BUILD_TYPE": "Debug"
+    //  }
+    //},
+    //{
+    //  "name": "x86-release",
+    //  "displayName": "x86 Release (msvc)",
+    //  "inherits": "win-msvc-vs-x86",
+    //  "cacheVariables": {
+    //    "CMAKE_BUILD_TYPE": "Release"
+    //  }
+    //},
+
     // Windows (clang-cl)
     {
-      "name": "x64-debug-clang-cl",
-      "displayName": "x64 Debug (clang-cl)",
-      "generator": "Visual Studio 17 2022",
-      // use msvc instead of Ninja - until the latter has improved its module support
-      //"generator": "Ninja",
+      "name": "win-clang-base",
+      "hidden": true,
+      "generator": "Ninja",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
-      "architecture": {
-        "value": "x64",
-        "strategy": "external"
-      },
+      "architecture": { "strategy": "external" },
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
         "CMAKE_C_COMPILER": "clang-cl.exe",
         "CMAKE_CXX_COMPILER": "clang-cl.exe"
       },
@@ -84,6 +102,27 @@
         "microsoft.com/VisualStudioSettings/CMake/1.0": {
           "intelliSenseMode": "windows-clang-x64"
         }
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "x64-debug-clang",
+      "displayName": "x64 Debug (clang)",
+      "inherits": "win-clang-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "x64-release-clang",
+      "displayName": "x64 Release (clang)",
+      "inherits": "win-clang-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
       }
     },
 
