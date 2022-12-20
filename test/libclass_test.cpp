@@ -1,7 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include "mylibrary/libclass.h"
-import libmodule;
 
 TEST_CASE("Test 'LibClass' defaults", "[libclass]") {
 	LibClass testclass;
@@ -14,8 +13,4 @@ TEST_CASE("Test 'LibClass' id", "[libclass]") {
 	REQUIRE(testclass.id() == 7);
 	testclass.active = false;
 	REQUIRE(testclass.id() == -7);
-}
-
-TEST_CASE("Test logmodule", "[libclass]") {
-	lib::log("hello");
 }
