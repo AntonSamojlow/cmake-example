@@ -21,16 +21,25 @@
       }
     },
     {
-      "name": "x64-debug-msvc",
-      "displayName": "x64 Debug (msvc)",
+      "name": "asan-msvc",
+      "displayName": "ASan (msvc)",
+      "inherits": "win-msvc-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug", // Release is also an option
+        "USE_ADDRESS_SANITIZER": true
+      }
+    },
+    {
+      "name": "debug-msvc",
+      "displayName": "Debug (msvc)",
       "inherits": "win-msvc-base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
       }
     },
     {
-      "name": "x64-release-msvc",
-      "displayName": "x64 Release (msvc)",
+      "name": "release-msvc",
+      "displayName": "Release (msvc)",
       "inherits": "win-msvc-base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
@@ -38,6 +47,7 @@
     },
 
     // using Visual Studio generator: supports arrchitecture choice x86/x64 
+    // see also https://gitlab.kitware.com/cmake/cmake/-/issues/16259
     //{
     //  "name": "win-msvc-vs-x86",
     //  "hidden": true,
@@ -85,7 +95,7 @@
     //  }
     //},
 
-    // Windows (clang-cl)
+    // Windows (Clang)
     {
       "name": "win-clang-base",
       "hidden": true,
@@ -95,7 +105,8 @@
       "architecture": { "strategy": "external" },
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang-cl.exe",
-        "CMAKE_CXX_COMPILER": "clang-cl.exe"
+        "CMAKE_CXX_COMPILER": "clang-cl.exe",
+        "IS_CLANG_CL":  true
       },
       "toolset": "ClangCL",
       "vendor": {
@@ -110,19 +121,28 @@
       }
     },
     {
-      "name": "x64-debug-clang",
-      "displayName": "x64 Debug (clang)",
+      "name": "debug-clang",
+      "displayName": "Debug (clang)",
       "inherits": "win-clang-base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
       }
     },
     {
-      "name": "x64-release-clang",
-      "displayName": "x64 Release (clang)",
+      "name": "release-clang",
+      "displayName": "Release (clang)",
       "inherits": "win-clang-base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "asan-clang",
+      "displayName": "ASan (clang)",
+      "inherits": "win-clang-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "USE_ADDRESS_SANITIZER": true
       }
     },
 
