@@ -2,14 +2,21 @@
   "version": 3,
   "configurePresets": [
 
-    // Windows (MVSC)
+    // Common defaults
     {
-      "name": "win-msvc-base",
+      "name": "common-default",
       "hidden": true,
       "generator": "Ninja",
       "architecture": { "strategy": "external" },
       "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}"
+    },
+
+    // Windows (MVSC)
+    {
+      "name": "win-msvc-base",
+      "hidden": true,
+      "inherits": "common-default",
       "cacheVariables": {
         "CMAKE_C_COMPILER": "cl.exe",
         "CMAKE_CXX_COMPILER": "cl.exe"
@@ -26,7 +33,7 @@
       "inherits": "win-msvc-base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug", // Release is also an option
-        "USE_ADDRESS_SANITIZER": true
+        "ENABLE_SANITIZER_ADDRESS": true
       }
     },
     {
@@ -46,67 +53,14 @@
       }
     },
 
-    // using Visual Studio generator: supports arrchitecture choice x86/x64 
-    // see also https://gitlab.kitware.com/cmake/cmake/-/issues/16259
-    //{
-    //  "name": "win-msvc-vs-x86",
-    //  "hidden": true,
-    //  "inherits": "win-msvc-base",
-    //  "generator": "Visual Studio 17 2022",
-    //  "architecture": { "value": "x86" }
-    //},
-    //{
-    //  "name": "win-msvc-vs-x64",
-    //  "hidden": true,
-    //  "inherits": "win-msvc-base",
-    //  "generator": "Visual Studio 17 2022",
-    //  "architecture": { "value": "x64" }
-    //},
-    //{
-    //  "name": "x64-debug-msvc",
-    //  "displayName": "x64 Debug (msvc)",
-    //  "inherits": "win-msvc-vs-x64",
-    //  "cacheVariables": {
-    //    "CMAKE_BUILD_TYPE": "Debug"
-    //  }
-    //},
-    //{
-    //  "name": "x64-release",
-    //  "displayName": "x64 Release (msvc)",
-    //  "inherits": "win-msvc-vs-x64",
-    //  "cacheVariables": {
-    //    "CMAKE_BUILD_TYPE": "Release"
-    //  }
-    //},
-    //{
-    //  "name": "x86-debug-msvc",
-    //  "displayName": "x86 Debug (msvc)",
-    //  "inherits": "win-msvc-vs-x86",
-    //  "cacheVariables": {
-    //    "CMAKE_BUILD_TYPE": "Debug"
-    //  }
-    //},
-    //{
-    //  "name": "x86-release",
-    //  "displayName": "x86 Release (msvc)",
-    //  "inherits": "win-msvc-vs-x86",
-    //  "cacheVariables": {
-    //    "CMAKE_BUILD_TYPE": "Release"
-    //  }
-    //},
-
     // Windows (Clang)
     {
       "name": "win-clang-base",
       "hidden": true,
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
-      "architecture": { "strategy": "external" },
+      "inherits": "common-default",
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang-cl.exe",
-        "CMAKE_CXX_COMPILER": "clang-cl.exe",
-        "IS_CLANG_CL":  true
+        "CMAKE_CXX_COMPILER": "clang-cl.exe"
       },
       "toolset": "ClangCL",
       "vendor": {
@@ -122,7 +76,7 @@
     },
     {
       "name": "debug-clang",
-      "displayName": "Debug (clang)",
+      "displayName": "Debug (clang-cl)",
       "inherits": "win-clang-base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
@@ -130,7 +84,7 @@
     },
     {
       "name": "release-clang",
-      "displayName": "Release (clang)",
+      "displayName": "Release (clang-cl)",
       "inherits": "win-clang-base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
@@ -138,11 +92,11 @@
     },
     {
       "name": "asan-clang",
-      "displayName": "ASan (clang)",
+      "displayName": "ASan (clang-cl)",
       "inherits": "win-clang-base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
-        "USE_ADDRESS_SANITIZER": true
+        "ENABLE_SANITIZER_ADDRESS": true
       }
     },
 
@@ -150,9 +104,7 @@
     {
       "name": "linux-debug",
       "displayName": "Linux Debug",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
+      "inherits": "common-default",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
       },
@@ -172,9 +124,7 @@
     {
       "name": "macos-debug",
       "displayName": "macOS Debug",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
+      "inherits": "common-default",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
       },
