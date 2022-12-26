@@ -65,15 +65,15 @@ function(
 
   # set build directives accordingly
   if(NOT LIST_OF_SANITIZERS OR "${LIST_OF_SANITIZERS}" STREQUAL "")
-    message("no SANITIZERS enabled")
+    message( "no SANITIZERS enabled for '${target_name}'")
   else()
-    message("SANITIZERS enabled: ${LIST_OF_SANITIZERS}")
+    message("SANITIZERS enabled for '${target_name}': ${LIST_OF_SANITIZERS}")
     if(NOT MSVC)
       message(STATUS "(compiler is not MSVC-like)")
       target_compile_options(${target_name} INTERFACE -fsanitize=${LIST_OF_SANITIZERS})
       target_link_options(${target_name} INTERFACE -fsanitize=${LIST_OF_SANITIZERS})
     else()
-      message(STATUS "(compiler is MSVC-like)")
+      message(STATUS "compiler is MSVC-like")
       
       if("${index_of_vs_install_dir}" STREQUAL "-1")
         message(
@@ -82,12 +82,12 @@ function(
         )
       endif()
       
-      target_compile_options(${target_name} PUBLIC /fsanitize=${LIST_OF_SANITIZERS} /Zi /INCREMENTAL:NO)
-      target_link_options(${target_name} INTERFACE /fsanitize=${LIST_OF_SANITIZERS} /INCREMENTAL:NO)
-
       # apply temporary fix for https://github.com/llvm/llvm-project/issues/56300 (and related solution https://stackoverflow.com/q/74186326)
       add_compile_definitions(_DISABLE_STRING_ANNOTATION=1 _DISABLE_VECTOR_ANNOTATION=1)
-
+      
+      target_compile_options(${target_name} PUBLIC /fsanitize=${LIST_OF_SANITIZERS} /Zi /INCREMENTAL:NO)
+      target_link_options(${target_name} INTERFACE /fsanitize=${LIST_OF_SANITIZERS} /INCREMENTAL:NO)
+      
       if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
         # detected MSVC+Clang => compiler is (clang-cl) => need to link the clang_rt.asan* libs
         # NOTE: we asuume a 64bit OS and that PATH is set up for these libs:
@@ -105,7 +105,6 @@ function(
 	      # target_link_directories(main PRIVATE "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.34.31933/bin/Hostx64/x64")
         # location asan_dbg_dynamic_runtime_thunk for x64:
 	      # target_link_directories(main PRIVATE "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/x64/lib/clang/15.0.1/lib/windows")
-
       endif()
 
     endif()

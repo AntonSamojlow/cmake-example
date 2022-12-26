@@ -24,4 +24,3 @@ enable_sanitizers(main
 # build target main_lib: as lib to be consumed by tests (is there a better solution?)
 add_library(main_lib ${SOURCES})
 target_link_libraries(main_lib PRIVATE ${DEPENDENCIES})
- 

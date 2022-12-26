@@ -7,6 +7,6 @@ find_package(spdlog REQUIRED)
 file(GLOB_RECURSE SOURCES LIST_DIRECTORIES true *.h *.cpp *.ixx)
 set(SOURCES ${SOURCES})
 
-# build target main: as executable
+# build target main: as library
 add_library(mylibrary ${SOURCES})
 target_link_libraries(mylibrary PRIVATE spdlog::spdlog)
