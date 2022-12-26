@@ -66,8 +66,6 @@ function(
   # set build directives accordingly
   if(NOT LIST_OF_SANITIZERS OR "${LIST_OF_SANITIZERS}" STREQUAL "")
     message("no SANITIZERS enabled")
-    message(STATUS "LIST_OF_SANITIZERS=${LIST_OF_SANITIZERS}")
-    message(STATUS "SANITIZERS=${SANITIZERS}")
   else()
     message("SANITIZERS enabled: ${LIST_OF_SANITIZERS}")
     if(NOT MSVC)
