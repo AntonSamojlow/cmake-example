@@ -10,3 +10,5 @@ set(SOURCES ${SOURCES})
 # build target main: as library
 add_library(mylibrary ${SOURCES})
 target_link_libraries(mylibrary PRIVATE spdlog::spdlog)
+
+set_default_warnings(mylibrary)

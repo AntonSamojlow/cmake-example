@@ -8,6 +8,7 @@ project ("cmake-example")
 set(CMAKE_CXX_STANDARD 20)
 
 include("${CMAKE_CURRENT_LIST_DIR}/cmake/Sanitizers.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/cmake/Warnings.cmake")
 
 # disabled module support since it is still experimental -> references:
 # https://gitlab.kitware.com/cmake/cmake/-/issues/18355

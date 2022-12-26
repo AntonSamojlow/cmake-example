@@ -15,6 +15,8 @@ target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
 # link the code to be tested:
 target_link_libraries(tests PRIVATE ${LIBRARIESUNDERTEST})
 
+set_default_warnings(tests)
+
 enable_sanitizers(tests
   "${ENABLE_SANITIZER_ADDRESS}"
   "${ENABLE_SANITIZER_LEAK}"

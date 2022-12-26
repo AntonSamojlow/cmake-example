@@ -1,7 +1,6 @@
 ﻿include_guard()
 
-function(
-  enable_sanitizers
+function(enable_sanitizers
   target_name
   ENABLE_SANITIZER_ADDRESS
   ENABLE_SANITIZER_LEAK

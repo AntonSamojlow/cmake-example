@@ -14,6 +14,8 @@ set(DEPENDENCIES spdlog::spdlog mylibrary)
 add_executable(main ${SOURCES})
 target_link_libraries(main PRIVATE ${DEPENDENCIES})
 
+set_default_warnings(main)
+
 enable_sanitizers(main
   "${ENABLE_SANITIZER_ADDRESS}"
   "${ENABLE_SANITIZER_LEAK}"
@@ -24,3 +26,5 @@ enable_sanitizers(main
 # build target main_lib: as lib to be consumed by tests (is there a better solution?)
 add_library(main_lib ${SOURCES})
 target_link_libraries(main_lib PRIVATE ${DEPENDENCIES})
+
+set_default_warnings(main_lib)
