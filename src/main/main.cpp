@@ -9,7 +9,7 @@
 int use_after_free(int nr);
 
 int main() {
-  int i;
+  // int i;
   int j;
 
   auto logger = spdlog::default_logger();
