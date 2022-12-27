@@ -10,8 +10,8 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - ubuntu-20.04
-          - macos-10.15
+          - ubuntu-22.04
+          - macos-12
           - windows-2022
         compiler:
           - llvm-15.0.0
@@ -21,9 +21,6 @@ jobs:
         build_type:
           - Release
           - Debug
-        #developer_mode:
-        #  - ON
-        #  - OFF
 
         exclude:
           # mingw is too buggy to support
@@ -38,4 +35,4 @@ jobs:
 
     steps:
       - name: test
-        run: echo "::debug test message env.CLANG_TIDY_VERSION"
+        run: echo "::debug test message $env.CLANG_TIDY_VERSION"
