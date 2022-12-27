@@ -1,7 +1,7 @@
 name: ci
 on: [push, pull_request]
 env:
-  CLANG_TIDY_VERSION: "15.0.0"
+  CLANG_TIDY_VERSION: "14.0.0"
 
 jobs:
   Test:
@@ -14,7 +14,7 @@ jobs:
           - macos-12
           - windows-2022
         compiler:
-          - llvm-15.0.0
+          - llvm-14.0.0
           - msvc
         generator:
           - "Ninja Multi-Config"
