@@ -1,5 +1,9 @@
 name: ci
-on: [push, pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
   Test:
@@ -14,7 +18,7 @@ jobs:
         compiler:
           - llvm-14.0.0
           #- gcc 
-          # TODO: add gcc support at some point | but not for windows, as mingw is too bad
+          # TODO: add gcc support (but not for windows, as mingw is too buggy)
         build_type:
           - Release
           - Debug
@@ -55,5 +59,5 @@ jobs:
           cmake: true
           ninja: true
           vcpkg: true
-          cppcheck: true
+          cppcheck: false # TODO: enable cppcheck
           clangtidy: true # instead of `true`, which chooses the default version, you can pass a specific version.
