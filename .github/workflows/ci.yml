@@ -1,19 +1,7 @@
 name: ci
-on:
-  pull_request:
-  release:
-    types: [published]
-  push:
-    tags:
-    branches:
-      - main
-      - develop
+on: [push, pull_request]
 
 env:
-  # Conan cache environment variables
-  CONAN_SYSREQUIRES_MODE: enabled
-  CONAN_USER_HOME: "${{ github.workspace }}/conan-cache"
-  CONAN_USER_HOME_SHORT: "${{ github.workspace }}/conan-cache/short"
   CLANG_TIDY_VERSION: "15.0.0"
 
 jobs:
