@@ -5,12 +5,7 @@
 #include "main/mainclass.h"
 #include "mylibrary/libclass.h"
 
-int use_after_free(int nr)
-{
-	int* array = new int[100];
-	delete[] array;
-	return array[nr];  // ASAN should find this
-}
+int use_after_free(int nr);
 
 int main()
 {
@@ -31,4 +26,11 @@ int main()
 	j = use_after_free(1);
 
 	return j;
+}
+
+int use_after_free(int nr)
+{
+	int* array = new int[100];
+	delete[] array;
+	return array[nr];  // ASAN should find this
 }

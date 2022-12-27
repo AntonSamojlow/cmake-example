@@ -1,6 +1,6 @@
 ﻿# this file and its sub-includes are inspired by https://github.com/aminya/cpp_vcpkg_project
 
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.20)
 
 project ("cmake-example")
 

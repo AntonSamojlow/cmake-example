@@ -6,7 +6,9 @@
 # https://github.com/lefticus/cppbestpractices/blob/master/02-Use_the_Tools_Available.md
 
 set(MSVC_DEFAULT_WARNINGS
-  /W4 # Baseline reasonable warnings
+  /permissive- # enforces standards conformance of MSVC
+
+  /W4 # All reasonable warnings
   /w14242 # 'identifier': conversion from 'type1' to 'type1', possible loss of data
   /w14254 # 'operator': conversion from 'type1:field_bits' to 'type2:field_bits', possible loss of data
   /w14263 # 'function': member function does not override any base class virtual member function
@@ -28,30 +30,37 @@ set(MSVC_DEFAULT_WARNINGS
   /w14905 # wide string literal cast to 'LPSTR'
   /w14906 # string literal cast to 'LPWSTR'
   /w14928 # illegal copy-initialization; more than one user-defined conversion has been implicitly applied
-  /permissive- # standards conformance mode for MSVC compiler.
 )
 
 set(CLANG_DEFAULT_WARNINGS
-  -Wall
+  # DISABLED:
+  -Wno-c++98-compat-pedantic # disabled, as we do not aim to be c++98 compatible
+
+  # ENABLED:
+  -Wall # standard
   -Wextra # reasonable and standard
-  -Wextra-semi # Warn about semicolon after in-class function definition.
   -Wshadow # warn the user if a variable declaration shadows one from a parent context
-  -Wnon-virtual-dtor # warn the user if a class with virtual functions has a non-virtual destructor. This helps
-  # catch hard to track down memory errors
+  -Wnon-virtual-dtor # warn the user if a class with virtual functions has a non-virtual destructor. 
+  -Wpedantic # warn if non-standard C++ is used
+
   -Wold-style-cast # warn for c-style casts
   -Wcast-align # warn for potential performance problem casts
   -Wunused # warn on anything being unused
   -Woverloaded-virtual # warn if you overload (not override) a virtual function
-  -Wpedantic # warn if non-standard C++ is used
   -Wconversion # warn on type conversions that may lose data
   -Wsign-conversion # warn on sign conversions
   -Wnull-dereference # warn if a null dereference is detected
   -Wdouble-promotion # warn if float is implicit promoted to double
   -Wformat=2 # warn on security issues around functions that format output (ie printf)
   -Wimplicit-fallthrough # warn on statements that fallthrough without an explicit annotation
+
+  # -Wlifetime # (only special branch of Clang currently) shows object lifetime issues
+  -Wextra-semi # warn about extra semicolon
+  -Wextra-semi-stmt # warn about extra semicolon making empty statement
 )
 
 set(GCC_DEFAULT_WARNINGS
+  ${CLANG_DEFAULT_WARNINGS}
   -Wmisleading-indentation # warn if indentation implies blocks where blocks do not exist
   -Wduplicated-cond # warn if if / else chain has duplicated conditions
   -Wduplicated-branches # warn if if / else branches have duplicated code
@@ -104,7 +113,7 @@ endfunction()
 
 function(set_default_warnings
   target_name)
-
+  
   set_specific_warnings(
     ${target_name}
     TRUE 
