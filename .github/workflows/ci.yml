@@ -1,13 +1,34 @@
 name: ci
-on: [push, pull_request]
+on:
+  pull_request:
+  release:
+    types: [published]
+  push:
+    tags:
+    branches:
+      - main
+      - develop
 
 env:
+  # Conan cache environment variables
+  CONAN_SYSREQUIRES_MODE: enabled
+  CONAN_USER_HOME: "${{ github.workspace }}/conan-cache"
+  CONAN_USER_HOME_SHORT: "${{ github.workspace }}/conan-cache/short"
   CLANG_TIDY_VERSION: "15.0.0"
 
 jobs:
   Test:
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
+
+      # Recommendations:
+      #   * support at least 2 operating systems
+      #   * support at least 2 compilers
+      #   * make sure all supported configurations for your project are built
+      #
+      # Disable/enable builds in this list to meet the above recommendations
+      # and your own projects needs
       matrix:
         os:
           - ubuntu-20.04
@@ -15,7 +36,7 @@ jobs:
           - windows-2022
         compiler:
           # you can specify the version after `-` like "llvm-13.0.0".
-          - llvm-15.0.0
+          - llvm-13.0.0
           - msvc
         generator:
           - "Ninja Multi-Config"
@@ -40,7 +61,7 @@ jobs:
         include:
           # Add appropriate variables for gcov version required. This will intentionally break
           # if you try to use a compiler that does not have gcov set
-          - compiler: llvm-13.0.0
+          - compiler: llvm-15.0.0
             gcov_executable: "llvm-cov gcov"
 
           ## Set up preferred package generators, for given build configurations
@@ -55,7 +76,7 @@ jobs:
           #  build_type: Debug
           #  gcov_executable: gcov
           #  developer_mode: On
-    runs-on: ${{ matrix.os }}
+
 
     steps:
       - name: Check for llvm version mismatches
