@@ -6,17 +6,8 @@ env:
 
 jobs:
   Test:
-    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
-
-      # Recommendations:
-      #   * support at least 2 operating systems
-      #   * support at least 2 compilers
-      #   * make sure all supported configurations for your project are built
-      #
-      # Disable/enable builds in this list to meet the above recommendations
-      # and your own projects needs
       matrix:
         os:
           - ubuntu-20.04
@@ -64,7 +55,7 @@ jobs:
           #  build_type: Debug
           #  gcov_executable: gcov
           #  developer_mode: On
-
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Check for llvm version mismatches
