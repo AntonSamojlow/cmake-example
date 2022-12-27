@@ -1,9 +1,10 @@
 ﻿include_guard()
 
 # Set the compiler warnings
-#
-# https://clang.llvm.org/docs/DiagnosticsReference.html
-# https://github.com/lefticus/cppbestpractices/blob/master/02-Use_the_Tools_Available.md
+# References:
+# - https://learn.microsoft.com/en-us/cpp/error-messages/compiler-warnings/compiler-warnings-c4000-c5999
+# - https://clang.llvm.org/docs/DiagnosticsReference.html
+# - https://github.com/lefticus/cppbestpractices/blob/master/02-Use_the_Tools_Available.md
 
 set(MSVC_DEFAULT_WARNINGS
   /permissive- # enforces standards conformance of MSVC
@@ -116,7 +117,7 @@ function(set_default_warnings
   
   set_specific_warnings(
     ${target_name}
-    TRUE 
+    FALSE 
     "${MSVC_DEFAULT_WARNINGS}"
     "${CLANG_DEFAULT_WARNINGS}" 
     "${GCC_DEFAULT_WARNINGS}")
