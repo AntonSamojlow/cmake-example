@@ -34,6 +34,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      
       - name: test-echo
         run: echo "::debug this is a test message..."
 
@@ -61,3 +62,17 @@ jobs:
           vcpkg: true
           cppcheck: false # TODO: enable cppcheck
           clangtidy: true # instead of `true`, which chooses the default version, you can pass a specific version.
+
+        # make sure coverage is only enabled for Debug builds, since it sets -O0 to make sure coverage
+        # has meaningful results
+      - name: Configure CMake
+        run: |
+          cmake -S . -B ./build -G "${{matrix.generator}}" -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}} -DOPT_ENABLE_COVERAGE:BOOL=${{ matrix.build_type == 'Debug' }} -DGIT_SHA:STRING=${{ github.sha }}
+
+      - name: Build main
+        run: |
+          cmake --build ./build --config ${{matrix.build_type}} --target main
+
+      - name: Build mylibrary
+        run: |
+          cmake --build ./build --config ${{matrix.build_type}} --target mylibrary
