@@ -8,7 +8,7 @@ jobs:
       matrix:
         path:
           - check: 'src'
-            exclude: '(hello|world)' # Exclude file paths containing "hello" or "world"
+            # exclude: '(hello|world)' # Exclude file paths containing "hello" or "world"
           - check: 'test'
             exclude: ''              # Nothing to exclude
     steps:
