@@ -2,7 +2,6 @@
   "version": 3,
   "configurePresets": [
 
-    // Common defaults
     {
       "name": "common-default",
       "hidden": true,
@@ -12,7 +11,6 @@
       "installDir": "${sourceDir}/out/install/${presetName}"
     },
 
-    // Windows (MVSC)
     {
       "name": "win-msvc-base",
       "hidden": true,
@@ -32,7 +30,7 @@
       "displayName": "ASan (msvc)",
       "inherits": "win-msvc-base",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug", // Release is also an option
+        "CMAKE_BUILD_TYPE": "Debug",
         "ENABLE_SANITIZER_ADDRESS": true
       }
     },
@@ -53,7 +51,6 @@
       }
     },
 
-    // Windows (Clang)
     {
       "name": "win-clang-base",
       "hidden": true,
@@ -100,7 +97,6 @@
       }
     },
 
-    // Linux
     {
       "name": "linux-debug",
       "displayName": "Linux Debug",
@@ -120,7 +116,6 @@
       }
     },
 
-    // MacOs
     {
       "name": "macos-debug",
       "displayName": "macOS Debug",
