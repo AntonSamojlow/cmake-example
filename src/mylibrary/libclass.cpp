@@ -1,15 +1,13 @@
 #include "libclass.h"
 
+#include <spdlog/spdlog.h>
+
 #include <format>
 
-import libmodule;
-
-int LibClass::id() const
-{
-	return count * (-1 +2*int(active));
+int LibClass::id() const {
+  return count * (-1 + 2 * int(active));
 }
 
-void LibClass::log() const
-{
-	lib::log(std::format("LibClass::log (count={}, active={})", count, active));
+void LibClass::log() const {
+  spdlog::default_logger()->info(std::format("LibClass::log (count={}, active={})", count, active));
 }

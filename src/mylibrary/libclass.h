@@ -1,10 +1,9 @@
 #pragma once
 
-struct LibClass
-{
-	int count = 0;
-	bool active = false;
+struct LibClass {
+  int count = 0;
+  bool active = false;
 
-	int id() const;
-	void log() const;
+  int id() const;
+  void log() const;
 };

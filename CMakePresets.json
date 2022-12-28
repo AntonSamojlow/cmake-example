@@ -2,15 +2,19 @@
   "version": 3,
   "configurePresets": [
 
-    // Windows (MVSC)
     {
-      "name": "windows-base",
+      "name": "common-default",
       "hidden": true,
-      "generator": "Visual Studio 17 2022",
-      // use msvc instead of Ninja - until the latter has improved its module support
-      //"generator": "Ninja",
+      "generator": "Ninja",
+      "architecture": { "strategy": "external" },
       "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}"
+    },
+
+    {
+      "name": "win-msvc-base",
+      "hidden": true,
+      "inherits": "common-default",
       "cacheVariables": {
         "CMAKE_C_COMPILER": "cl.exe",
         "CMAKE_CXX_COMPILER": "cl.exe"
@@ -22,62 +26,36 @@
       }
     },
     {
-      "name": "x64-debug",
-      "displayName": "x64 Debug",
-      "inherits": "windows-base",
-      "architecture": {
-        "value": "x64",
-        "strategy": "external"
-      },
+      "name": "asan-msvc",
+      "displayName": "ASan (msvc)",
+      "inherits": "win-msvc-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_SANITIZER_ADDRESS": true
+      }
+    },
+    {
+      "name": "debug-msvc",
+      "displayName": "Debug (msvc)",
+      "inherits": "win-msvc-base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
       }
     },
     {
-      "name": "x64-release",
-      "displayName": "x64 Release",
-      "inherits": "x64-debug",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
-      }
-    },
-    {
-      "name": "x86-debug",
-      "displayName": "x86 Debug",
-      "inherits": "windows-base",
-      "architecture": {
-        "value": "x86",
-        "strategy": "external"
-      },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
-      }
-    },
-    {
-      "name": "x86-release",
-      "displayName": "x86 Release",
-      "inherits": "x86-debug",
+      "name": "release-msvc",
+      "displayName": "Release (msvc)",
+      "inherits": "win-msvc-base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
       }
     },
 
-    // Windows (clang-cl)
     {
-      "name": "x64-debug-clang-cl",
-      "displayName": "x64 Debug (clang-cl)",
-      "generator": "Visual Studio 17 2022",
-      // use msvc instead of Ninja - until the latter has improved its module support
-      //"generator": "Ninja",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
-      "architecture": {
-        "value": "x64",
-        "strategy": "external"
-      },
+      "name": "win-clang-base",
+      "hidden": true,
+      "inherits": "common-default",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
         "CMAKE_C_COMPILER": "clang-cl.exe",
         "CMAKE_CXX_COMPILER": "clang-cl.exe"
       },
@@ -86,16 +64,43 @@
         "microsoft.com/VisualStudioSettings/CMake/1.0": {
           "intelliSenseMode": "windows-clang-x64"
         }
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "debug-clang",
+      "displayName": "Debug (clang-cl)",
+      "inherits": "win-clang-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release-clang",
+      "displayName": "Release (clang-cl)",
+      "inherits": "win-clang-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "asan-clang",
+      "displayName": "ASan (clang-cl)",
+      "inherits": "win-clang-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "ENABLE_SANITIZER_ADDRESS": true
       }
     },
 
-    // Linux
     {
       "name": "linux-debug",
       "displayName": "Linux Debug",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
+      "inherits": "common-default",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
       },
@@ -111,13 +116,10 @@
       }
     },
 
-    // MacOs
     {
       "name": "macos-debug",
       "displayName": "macOS Debug",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
+      "inherits": "common-default",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
       },
