@@ -1,138 +1,163 @@
 ﻿{
-  "version": 3,
-  "configurePresets": [
+	"version": 3,
+	"cmakeMinimumRequired": {
+		"major": 3,
+		"minor": 21,
+		"patch": 0
+	},
+	"configurePresets": [
+		{
+			"name": "base",
+			"displayName": "For more information: http://aka.ms/cmakepresetsvs",
+			"hidden": true,
+			"generator": "Ninja",
+			"architecture": {
+				"value": "x64",
+				"strategy": "external"
+			},
+			"binaryDir": "${sourceDir}/out/build/${presetName}",
+			"installDir": "${sourceDir}/out/install/${presetName}",
+			"toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+			"environment": {
+				"VCPKG_ROOT": "./vcpkg"
+			}
+		},
 
-    {
-      "name": "common-default",
-      "hidden": true,
-      "generator": "Ninja",
-      "architecture": { "strategy": "external" },
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}"
-    },
+		{
+			"name": "asan",
+			"hidden": true,
+			"cacheVariables": {
+				"ENABLE_SANITIZER_ADDRESS": true
+			}
+		},
 
-    {
-      "name": "win-msvc-base",
-      "hidden": true,
-      "inherits": "common-default",
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "cl.exe",
-        "CMAKE_CXX_COMPILER": "cl.exe"
-      },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Windows"
-      }
-    },
-    {
-      "name": "asan-msvc",
-      "displayName": "ASan (msvc)",
-      "inherits": "win-msvc-base",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "ENABLE_SANITIZER_ADDRESS": true
-      }
-    },
-    {
-      "name": "debug-msvc",
-      "displayName": "Debug (msvc)",
-      "inherits": "win-msvc-base",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
-      }
-    },
-    {
-      "name": "release-msvc",
-      "displayName": "Release (msvc)",
-      "inherits": "win-msvc-base",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
-      }
-    },
+		{
+			"name": "debug",
+			"hidden": true,
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug"
+			}
+		},
 
-    {
-      "name": "win-clang-base",
-      "hidden": true,
-      "inherits": "common-default",
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "clang-cl.exe",
-        "CMAKE_CXX_COMPILER": "clang-cl.exe"
-      },
-      "toolset": "ClangCL",
-      "vendor": {
-        "microsoft.com/VisualStudioSettings/CMake/1.0": {
-          "intelliSenseMode": "windows-clang-x64"
-        }
-      },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Windows"
-      }
-    },
-    {
-      "name": "debug-clang",
-      "displayName": "Debug (clang-cl)",
-      "inherits": "win-clang-base",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
-      }
-    },
-    {
-      "name": "release-clang",
-      "displayName": "Release (clang-cl)",
-      "inherits": "win-clang-base",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
-      }
-    },
-    {
-      "name": "asan-clang",
-      "displayName": "ASan (clang-cl)",
-      "inherits": "win-clang-base",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
-        "ENABLE_SANITIZER_ADDRESS": true
-      }
-    },
+		{
+			"name": "release",
+			"hidden": true,
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Release"
+			}
+		},
 
-    {
-      "name": "linux-debug",
-      "displayName": "Linux Debug",
-      "inherits": "common-default",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
-      },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Linux"
-      },
-      "vendor": {
-        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
-          "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
-        }
-      }
-    },
+		{
+			"name": "clang-cl",
+			"hidden": true,
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "clang-cl.exe",
+				"CMAKE_CXX_COMPILER": "clang-cl.exe"
+			},
+			"vendor": {
+				"microsoft.com/VisualStudioSettings/CMake/1.0": {
+					"intelliSenseMode": "windows-clang-x64"
+				}
+			},
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Windows"
+			}
+		},
 
-    {
-      "name": "macos-debug",
-      "displayName": "macOS Debug",
-      "inherits": "common-default",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
-      },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Darwin"
-      },
-      "vendor": {
-        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
-          "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
-        }
-      }
-    }
-  ]
+		{
+			"name": "msvc",
+			"hidden": true,
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "cl.exe",
+				"CMAKE_CXX_COMPILER": "cl.exe"
+			},
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Windows"
+			}
+		},
+
+		{
+			"name": "linux",
+			"hidden": true,
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Linux"
+			},
+			"vendor": {
+				"microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+					"sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
+				}
+			}
+		},
+
+		{
+			"name": "macos",
+			"hidden": true,
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Darwin"
+			},
+			"vendor": {
+				"microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+					"sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
+				}
+			}
+		},
+
+		{
+			"name": "msvc-debug",
+			"displayName": "MSVC Debug",
+			"inherits": [ "base", "msvc", "debug" ]
+		},
+		{
+			"name": "msvc-release",
+			"displayName": "MSVC Release",
+			"inherits": [ "base", "msvc", "release" ]
+		},
+		{
+			"name": "msvc-asan",
+			"displayName": "MSVC ASan",
+			"inherits": [ "base", "msvc", "debug", "asan" ]
+		},
+		{
+			"name": "clang-cl-debug",
+			"displayName": "ClangCl Debug",
+			"inherits": [ "base", "clang-cl", "debug" ]
+		},
+		{
+			"name": "clang-cl-release",
+			"displayName": "ClangCl Release",
+			"inherits": [ "base", "clang-cl", "release" ]
+		},
+		{
+			"name": "clang-cl-asan",
+			"displayName": "ClangCl ASan",
+			"inherits": [ "base", "clang-cl", "release", "asan" ]
+		},
+		{
+			"name": "linux-release",
+			"displayName": "Linux Release",
+			"inherits": [ "base", "linux", "release"]
+		},
+		{
+			"name": "macos-release",
+			"displayName": "MacOs Release",
+			"inherits": [ "base", "macos", "release"]
+		}
+
+	],
+
+	"buildPresets": [
+
+
+	],
+	"testPresets": [
+
+	]
 }
