@@ -143,12 +143,12 @@
 		{
 			"name": "linux-release",
 			"displayName": "Linux Release",
-			"inherits": [ "base", "linux", "release"]
+			"inherits": [ "base", "linux", "release" ]
 		},
 		{
 			"name": "macos-release",
 			"displayName": "MacOs Release",
-			"inherits": [ "base", "macos", "release"]
+			"inherits": [ "base", "macos", "release" ]
 		}
 
 	],
@@ -157,12 +157,12 @@
 		{
 			"name": "msvc-debug-default",
 			"displayName": "default",
-			"configurePreset": "msvc-debug"
+			"configurePreset": "msvc"
 		},
 		{
 			"name": "msvc-debug-verbose",
 			"displayName": "verbose",
-			"configurePreset": "msvc-debug"
+			"configurePreset": "msvc"
 		},
 		{
 			"name": "clang-cl-default",
@@ -177,6 +177,20 @@
 	],
 
 	"testPresets": [
+		{
+			"name": "msvc-release",
+			"configurePreset": "msvc-release",
+			"output": {
+				"outputOnFailure": true
+			}
+		},
+		{
+			"name": "clang-cl-release",
+			"configurePreset": "clang-cl-release",
+			"output": {
+				"outputOnFailure": true
+			}
+		}
 
 	]
 }

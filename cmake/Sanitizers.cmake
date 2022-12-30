@@ -92,11 +92,11 @@ function(enable_sanitizers
         # NOTE: we asuume a 64bit OS and that PATH is set up for these libs:
         message(STATUS "Clang-Cl detected - linking clang_rt.asan* libraries, assuming x64 => ensure they exist in PATH")
         if(CMAKE_BUILD_TYPE STREQUAL Release)
-			    target_link_libraries(${target_name} PUBLIC clang_rt.asan_dynamic-x86_64 clang_rt.asan_dynamic_runtime_thunk-x86_64)
-			    target_link_options(${target_name} PUBLIC /wholearchive:clang_rt.asan_dynamic_runtime_thunk-x86_64.lib)	
+			    target_link_libraries(${target_name} PRIVATE clang_rt.asan_dynamic-x86_64 clang_rt.asan_dynamic_runtime_thunk-x86_64)
+			    target_link_options(${target_name} PRIVATE /wholearchive:clang_rt.asan_dynamic_runtime_thunk-x86_64.lib)	
 		    elseif(CMAKE_BUILD_TYPE STREQUAL Debug)
-			    target_link_libraries(${target_name} PUBLIC clang_rt.asan_dbg_dynamic-x86_64 clang_rt.asan_dbg_dynamic_runtime_thunk-x86_64)
-			    target_link_options(${target_name} PUBLIC /wholearchive:clang_rt.asan_dbg_dynamic_runtime_thunk-x86_64.lib)
+			    target_link_libraries(${target_name} PRIVATE clang_rt.asan_dbg_dynamic-x86_64 clang_rt.asan_dbg_dynamic_runtime_thunk-x86_64)
+			    target_link_options(${target_name} PRIVATE /wholearchive:clang_rt.asan_dbg_dynamic_runtime_thunk-x86_64.lib)
 		    endif()	
         
         # INFO to set up PATH / Whre to find libs:
