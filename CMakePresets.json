@@ -155,14 +155,19 @@
 
 	"buildPresets": [
 		{
-			"name": "msvc-debug-default",
+			"name": "msvc-release",
 			"displayName": "default",
-			"configurePreset": "msvc"
+			"configurePreset": "msvc-release"
+		},
+		{
+			"name": "msvc-debug",
+			"displayName": "default",
+			"configurePreset": "msvc-debug"
 		},
 		{
 			"name": "msvc-debug-verbose",
 			"displayName": "verbose",
-			"configurePreset": "msvc"
+			"configurePreset": "msvc-debug"
 		},
 		{
 			"name": "clang-cl-default",
