@@ -33,7 +33,7 @@ jobs:
           - os: windows-latest
             triplet: x64-windows
             compiler: llvm-14.0.0
-            configure-preset: clangl-cl-release
+            configure-preset: clang-cl-release
             build-preset: clang-cl-release
             test-preset: clang-cl-release
           - os: ubuntu-latest
