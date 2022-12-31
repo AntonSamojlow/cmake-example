@@ -160,7 +160,7 @@
 			"configurePreset": "msvc-release"
 		},
 		{
-			"name": "clangl-cl-release",
+			"name": "clang-cl-release",
 			"displayName": "default",
 			"configurePreset": "clang-cl-release"
 		},

@@ -10,6 +10,7 @@ function(enable_sanitizers
 
   # collect all enabled sanitizers
   set(SANITIZERS "")
+  message(STATUS "CMAKE_CXX_COMPILER_ID=${CMAKE_CXX_COMPILER_ID}")
   if(MSVC)
     if(${ENABLE_SANITIZER_LEAK}
        OR ${ENABLE_SANITIZER_UNDEFINED_BEHAVIOR}
@@ -20,7 +21,7 @@ function(enable_sanitizers
     if(${ENABLE_SANITIZER_ADDRESS})
        list(APPEND SANITIZERS "address")
     endif()
-  elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
+  elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     if(${ENABLE_SANITIZER_ADDRESS})
       list(APPEND SANITIZERS "address")
     endif()
