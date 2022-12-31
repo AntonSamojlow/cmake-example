@@ -160,6 +160,21 @@
 			"configurePreset": "msvc-release"
 		},
 		{
+			"name": "clangl-cl-release",
+			"displayName": "default",
+			"configurePreset": "clang-cl-release"
+		},
+		{
+			"name": "linux-release",
+			"displayName": "default",
+			"configurePreset": "linux-release"
+		},
+		{
+			"name": "macos-release",
+			"displayName": "default",
+			"configurePreset": "macos-release"
+		},
+		{
 			"name": "msvc-debug",
 			"displayName": "default",
 			"configurePreset": "msvc-debug"
@@ -170,12 +185,12 @@
 			"configurePreset": "msvc-debug"
 		},
 		{
-			"name": "clang-cl-default",
+			"name": "clang-cl-debug",
 			"displayName": "default",
 			"configurePreset": "clang-cl-debug"
 		},
 		{
-			"name": "clang-cl-verbose",
+			"name": "clang-cl-debug-verbose",
 			"displayName": "verbose",
 			"configurePreset": "clang-cl-debug"
 		}
@@ -183,18 +198,31 @@
 
 	"testPresets": [
 		{
-			"name": "msvc-release",
-			"configurePreset": "msvc-release",
+			"name": "base",
+			"hidden": true,
 			"output": {
 				"outputOnFailure": true
 			}
 		},
 		{
+			"name": "msvc-release",
+			"configurePreset": "msvc-release",
+			"inherits": ["base"]
+		},
+		{
 			"name": "clang-cl-release",
 			"configurePreset": "clang-cl-release",
-			"output": {
-				"outputOnFailure": true
-			}
+			"inherits": ["base"]
+		},
+		{
+			"name": "linux-release",
+			"configurePreset": "linux-release",
+			"inherits": ["base"]
+		},
+		{
+			"name": "macos-release",
+			"configurePreset": "macos-release",
+			"inherits": ["base"]
 		}
 
 	]
