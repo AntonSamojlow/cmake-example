@@ -42,7 +42,7 @@ function(enable_sanitizers
       endif()
     endif()
 
-    if(${ENABLE_SANITIZER_MEMORY} AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    if(${ENABLE_SANITIZER_MEMORY} AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"))
       message(
         WARNING
           "Memory sanitizer requires all the code (including libc++) to be MSan-instrumented otherwise it reports false positives"
