@@ -15,12 +15,12 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          # - ubuntu-latest
+          - ubuntu-latest
           # - macos-latest
           - windows-latest
         compiler:
-          - msvc
-          # - llvm-14.0.0
+          # - msvc
+          - llvm-14.0.0
           #- gcc 
           # TODO: add gcc support (but not for windows, as mingw is too buggy)
         include:
@@ -30,10 +30,20 @@ jobs:
             configure-preset: msvc-release
             build-preset: msvc-release
             test-preset: msvc-release
-          # - os: ubuntu-latest
-          #   triplet: x64-linux
-          # - os: macos-latest
-          #   triplet: x64-osx
+        include:
+          - os: windows-latest
+            triplet: x64-windows
+            compiler: llvm-14.0.0
+            configure-preset: clangl-cl-release
+            build-preset: clang-cl-release
+            test-preset: clang-cl-release
+        include:
+          - os: ubuntu-latest
+            triplet: x64-linux
+            compiler: llvm-14.0.0
+            configure-preset: linux-release
+            build-preset: linux-release
+            test-preset: linux-release
 
     env:
       # Indicates the location of the vcpkg as a Git submodule of the project repository.
