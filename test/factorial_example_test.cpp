@@ -14,6 +14,6 @@ TEST_CASE("Factorial Example Test", "[factorial]") {
   REQUIRE(Factorial(10) == 3628800);
 }
 
-TEST_CASE("Factorial Example Test Failing", "[factorial-fail]") {
-  REQUIRE(Factorial(1) == 0);
-}
+// TEST_CASE("Factorial Example Test Failing", "[factorial-fail]") {
+//   REQUIRE(Factorial(1) == 0);
+// }
