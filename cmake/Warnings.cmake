@@ -33,7 +33,7 @@ set(MSVC_DEFAULT_WARNINGS
   /w14928 # illegal copy-initialization; more than one user-defined conversion has been implicitly applied
 )
 
-set(CLANG_DEFAULT_WARNINGS
+set(GCC_AND_CLANG_DEFAULT_WARNINGS
   # DISABLED:
   -Wno-c++98-compat-pedantic # disabled, as we do not aim to be c++98 compatible
 
@@ -57,11 +57,15 @@ set(CLANG_DEFAULT_WARNINGS
 
   # -Wlifetime # (only special branch of Clang currently) shows object lifetime issues
   -Wextra-semi # warn about extra semicolon
+)
+
+set(CLANG_DEFAULT_WARNINGS
+  ${GCC_AND_CLANG_DEFAULT_WARNINGS}
   -Wextra-semi-stmt # warn about extra semicolon making empty statement
 )
 
 set(GCC_DEFAULT_WARNINGS
-  ${CLANG_DEFAULT_WARNINGS}
+  ${GCC_AND_CLANG_DEFAULT_WARNINGS}
   -Wmisleading-indentation # warn if indentation implies blocks where blocks do not exist
   -Wduplicated-cond # warn if if / else chain has duplicated conditions
   -Wduplicated-branches # warn if if / else branches have duplicated code
