@@ -1,13 +1,13 @@
 #include "mainclass.h"
 
-#include <format>
+#include <string>
 
 void MainClass::recompute_flag() {
   is_odd = value_is_odd();
 }
 
 std::string MainClass::stringify() {
-  return std::format("value={}, is_odd={}", value, is_odd);
+  return "value=" + std::to_string(value) +", is_odd=" + std::to_string(is_odd);
 }
 
 bool MainClass::value_is_odd() {
