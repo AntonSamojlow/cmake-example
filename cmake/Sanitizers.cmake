@@ -41,8 +41,8 @@ function(enable_sanitizers
         list(APPEND SANITIZERS "thread")
       endif()
     endif()
-
-    if(${ENABLE_SANITIZER_MEMORY} AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"))
+    message(STATUS "ENABLE_SANITIZER_MEMORY=${ENABLE_SANITIZER_MEMORY}")
+    if(${ENABLE_SANITIZER_MEMORY} AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
       message(
         WARNING
           "Memory sanitizer requires all the code (including libc++) to be MSan-instrumented otherwise it reports false positives"
@@ -50,7 +50,8 @@ function(enable_sanitizers
       if("address" IN_LIST SANITIZERS
          OR "thread" IN_LIST SANITIZERS
          OR "leak" IN_LIST SANITIZERS)
-        message(WARNING "Memory sanitizer does not work with Address, Thread and Leak sanitizer enabled")
+        message(SEND_ERROR 
+          "Memory sanitizer does not work with Address, Thread and Leak sanitizer enabled")
       else()
         list(APPEND SANITIZERS "memory")
       endif()
