@@ -11,37 +11,36 @@ function(enable_sanitizers
   # collect all enabled sanitizers
   set(SANITIZERS "")
   if(MSVC)
-    if(${ENABLE_SANITIZER_LEAK}
-       OR ${ENABLE_SANITIZER_UNDEFINED_BEHAVIOR}
-       OR ${ENABLE_SANITIZER_THREAD}
-       OR ${ENABLE_SANITIZER_MEMORY})
+    if(ENABLE_SANITIZER_LEAK
+       OR ENABLE_SANITIZER_UNDEFINED_BEHAVIOR
+       OR ENABLE_SANITIZER_THREAD
+       OR ENABLE_SANITIZER_MEMORY)
        message(SEND_ERROR "MSVC only supports address sanitizer")
     endif()
-    if(${ENABLE_SANITIZER_ADDRESS})
+    if(ENABLE_SANITIZER_ADDRESS)
        list(APPEND SANITIZERS "address")
     endif()
-  elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
-    if(${ENABLE_SANITIZER_ADDRESS})
+  elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    if(ENABLE_SANITIZER_ADDRESS)
       list(APPEND SANITIZERS "address")
     endif()
 
-    if(${ENABLE_SANITIZER_LEAK})
+    if(ENABLE_SANITIZER_LEAK)
       list(APPEND SANITIZERS "leak")
     endif()
 
-    if(${ENABLE_SANITIZER_UNDEFINED_BEHAVIOR})
+    if(ENABLE_SANITIZER_UNDEFINED_BEHAVIOR)
       list(APPEND SANITIZERS "undefined")
     endif()
 
-    if(${ENABLE_SANITIZER_THREAD})
+    if(ENABLE_SANITIZER_THREAD)
       if("address" IN_LIST SANITIZERS OR "leak" IN_LIST SANITIZERS)
         message(WARNING "Thread sanitizer does not work with Address and Leak sanitizer enabled")
       else()
         list(APPEND SANITIZERS "thread")
       endif()
     endif()
-
-    if(${ENABLE_SANITIZER_MEMORY} AND CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
+    if(ENABLE_SANITIZER_MEMORY AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
       message(
         WARNING
           "Memory sanitizer requires all the code (including libc++) to be MSan-instrumented otherwise it reports false positives"
@@ -49,7 +48,8 @@ function(enable_sanitizers
       if("address" IN_LIST SANITIZERS
          OR "thread" IN_LIST SANITIZERS
          OR "leak" IN_LIST SANITIZERS)
-        message(WARNING "Memory sanitizer does not work with Address, Thread and Leak sanitizer enabled")
+        message(SEND_ERROR 
+          "Memory sanitizer does not work with Address, Thread and Leak sanitizer enabled")
       else()
         list(APPEND SANITIZERS "memory")
       endif()
@@ -90,7 +90,7 @@ function(enable_sanitizers
       if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
         # detected MSVC+Clang => compiler is (clang-cl) => need to link the clang_rt.asan* libs
         # NOTE: we asuume a 64bit OS and that PATH is set up for these libs:
-        message(STATUS "Clang-Cl detected - linking clang_rt.asan* libraries, assuming x64 => ensure they exists in PATH")
+        message(STATUS "Clang-Cl detected - linking clang_rt.asan* libraries, assuming x64 => ensure they exist in PATH")
         if(CMAKE_BUILD_TYPE STREQUAL Release)
 			    target_link_libraries(${target_name} PRIVATE clang_rt.asan_dynamic-x86_64 clang_rt.asan_dynamic_runtime_thunk-x86_64)
 			    target_link_options(${target_name} PRIVATE /wholearchive:clang_rt.asan_dynamic_runtime_thunk-x86_64.lib)	

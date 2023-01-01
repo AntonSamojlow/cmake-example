@@ -1,78 +1,90 @@
-# name: ci
-# on:
-#   pull_request:
-#   push:
-#     branches:
-#       - main
+# CI workflow that builds and tests the code on different os and compilers
+# relies on the CMakePresets.json entries
 
-# jobs:
-#   Test:
-#     runs-on: ${{ matrix.os }}
-#     strategy:
-#       fail-fast: false
-#       matrix:
-#         os:
-#           - windows-2022
-#           - ubuntu-22.04
-#           - macos-12
-#         compiler:
-#           - llvm-14.0.0
-#           #- gcc 
-#           # TODO: add gcc support (but not for windows, as mingw is too buggy)
-#         build_type:
-#           - Release
-#           - Debug
-          
-#         include:
-#           - os: windows-2022
-#             compiler: msvc
+# inspired by / adapted from:
+#  https://github.com/lukka/CppCMakeVcpkgTemplate/blob/main/.github/workflows/hosted-pure-workflow.yml
 
-#         #exclude:
-#         #  # mingw is too buggy to support
-#         #  - os: windows-2022
-#         #    compiler: gcc
+name: ci
+on:
+  pull_request:
+  push:
+    branches:
+      - main
 
-#     steps:
-#       - uses: actions/checkout@v3
-      
-#       - name: test-echo
-#         run: echo "::debug this is a test message..."
+jobs:
+  job:
+    name: ${{ matrix.os }}-${{ matrix.configure-preset }}-${{ github.workflow }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+        configure-preset: 
+          - clang-release
+          - gcc-release
+        
+        include:
+          - os: ubuntu-latest
+            triplet: x64-linux
+          - os: macos-latest
+            triplet: x64-osx
+          - os: windows-latest
+            triplet: x64-windows
+            configure-preset: msvc-release
+          - os: windows-latest
+            triplet: x64-windows
+            configure-preset: clang-cl-release
 
-#       - name: Cache
-#         uses: actions/cache@v3
-#         with:
-#           path: |
-#             ~/vcpkg
-#             ./build/vcpkg_installed
-#             ${{ env.HOME }}/.cache/vcpkg/archives
-#             ${{ env.XDG_CACHE_HOME }}/vcpkg/archives
-#             ${{ env.LOCALAPPDATA }}\vcpkg\archives
-#             ${{ env.APPDATA }}\vcpkg\archives
-#           key: ${{ runner.os }}-${{ matrix.compiler }}-${{ env.BUILD_TYPE }}-${{ hashFiles('**/CMakeLists.txt') }}-${{ hashFiles('./vcpkg.json')}}
-#           restore-keys: |
-#             ${{ runner.os }}-${{ env.BUILD_TYPE }}-
+    env:
+      # Indicates the location of the vcpkg as a Git submodule of the project repository.
+      VCPKG_ROOT: ${{ github.workspace }}/vcpkg
+      # Tells vcpkg where binary packages are stored.
+      VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}/vcpkg/bincache
 
-#       - name: Setup Cpp
-#         uses: aminya/setup-cpp@v1
-#         with:
-#           compiler: ${{ matrix.compiler }}
-#           vcvarsall: ${{ contains(matrix.os, 'windows') }}
-#           cmake: true
-#           ninja: true
-#           vcpkg: true
-#           cppcheck: false # TODO: enable cppcheck
-#           clangtidy: true # instead of `true`, which chooses the default version, you can pass a specific version.
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: "Create directory '${{ env.VCPKG_DEFAULT_BINARY_CACHE }}'"
+        run: mkdir -p $VCPKG_DEFAULT_BINARY_CACHE
+        shell: bash
 
-#         # make sure coverage is only enabled for Debug builds, since it sets -O0 to make sure coverage
-#         # has meaningful results
-#       - name: Configure CMake
-#         run: |
-#           cmake -S . -B ./build -G "${{matrix.generator}}" -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}} -DOPT_ENABLE_COVERAGE:BOOL=${{ matrix.build_type == 'Debug' }} -DGIT_SHA:STRING=${{ github.sha }}
+      # Setup the build machine with the most recent versions of CMake and Ninja. Both are cached if not already: on subsequent runs both will be quickly restored from GitHub cache service.
+      - uses: lukka/get-cmake@latest
 
-#       - name: Build main
-#         run: |
-#           cmake --build ./build --config ${{matrix.build_type}} --target main
+      # Restore both vcpkg and its artifacts from the GitHub cache service.
+      - name: Restore vcpkg and its artifacts.
+        uses: actions/cache@v3
+        with:
+          # The first path is the location of vcpkg: it contains the vcpkg executable and data files, as long as the
+          # built package archives (aka binary cache) which are located by VCPKG_DEFAULT_BINARY_CACHE env var.
+          # The other paths starting with '!' are exclusions: they contain termporary files generated during the build of the installed packages.
+          path: |
+            ${{ env.VCPKG_ROOT }}
+            !${{ env.VCPKG_ROOT }}/buildtrees
+            !${{ env.VCPKG_ROOT }}/packages
+            !${{ env.VCPKG_ROOT }}/downloads
+            !${{ env.VCPKG_ROOT }}/installed
+          # The key is composed in a way that it gets properly invalidated: this must happen whenever vcpkg's Git commit id changes, or the list of packages changes. In this case a cache miss must happen and a new entry with a new key with be pushed to GitHub the cache service.
+          # The key includes: hash of the vcpkg.json file, the hash of the vcpkg Git commit id, and the used vcpkg's triplet. The vcpkg's commit id would suffice, but computing an hash out it does not harm.
+          # Note: given a key, the cache content is immutable. If a cache entry has been created improperly, in order the recreate the right content the key must be changed as well, and it must be brand new (i.e. not existing already).
+          key: |
+            ${{ hashFiles( 'vcpkg.json' ) }}-${{ hashFiles( '.git/modules/vcpkg/HEAD' )}}-${{ matrix.triplet }}
 
-#       - name: Build mylibrary
-#         run: |
-#           cmake --build ./build --config ${{matrix.build_type}} --target mylibrary
+      # On Windows runners, let's ensure to have the Developer Command Prompt environment setup correctly. 
+      # As used here the Developer Command Prompt created is targeting x64 and using the default the Windows SDK.
+      - uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Cmake Configure
+        run: |
+          cmake --preset ${{ matrix.configure-preset }}
+
+      - name: Cmake Build
+        run: |
+          cmake --build --preset ${{ matrix.configure-preset }}
+
+      - name: Run CTest
+        run: |
+          ctest --preset ${{ matrix.configure-preset }}
