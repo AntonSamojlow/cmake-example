@@ -19,25 +19,30 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - ubuntu-latest
           - windows-latest
-          # - macos-latest
+          - ubuntu-latest
+          - macos-latest
+        triplet:
+          - x64-linux
+        configure-preset: 
+          - clang-release
+          - gcc-release
+        
+        exclude:
+          - os: windows-latest
+            configure-preset: clang-release
+
+        exclude:
+          - os: windows-latest
+            configure-preset: gcc-release
+
         include:
           - os: windows-latest
             triplet: x64-windows
             configure-preset: msvc-release
-            build-preset: msvc-release
-            test-preset: msvc-release
           - os: windows-latest
             triplet: x64-windows
             configure-preset: clang-cl-release
-            build-preset: clang-cl-release
-            test-preset: clang-cl-release
-          - os: ubuntu-latest
-            triplet: x64-linux
-            configure-preset: clang-release
-            build-preset: clang-release
-            test-preset: clang-release
 
     env:
       # Indicates the location of the vcpkg as a Git submodule of the project repository.
@@ -85,8 +90,8 @@ jobs:
 
       - name: Cmake Build
         run: |
-          cmake --build --preset ${{ matrix.build-preset }}
+          cmake --build --preset ${{ matrix.configure-preset }}
 
       - name: Run CTest
         run: |
-          ctest --preset ${{ matrix.test-preset }}
+          ctest --preset ${{ matrix.configure-preset }}
