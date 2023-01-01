@@ -19,24 +19,17 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - windows-latest
           - ubuntu-latest
           - macos-latest
-        triplet:
-          - x64-linux
         configure-preset: 
           - clang-release
           - gcc-release
         
-        exclude:
-          - os: windows-latest
-            configure-preset: clang-release
-
-        exclude:
-          - os: windows-latest
-            configure-preset: gcc-release
-
         include:
+          - os: ubuntu-latest
+            triplet: x64-linux
+          - os: macos-latest
+            triplet: x64-osx
           - os: windows-latest
             triplet: x64-windows
             configure-preset: msvc-release
