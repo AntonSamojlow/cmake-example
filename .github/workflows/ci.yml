@@ -7,7 +7,7 @@
 name: ci
 on:
   schedule:
-    - cron: '10 18 * * SUN'
+    - cron: '25 18 * * SUN'
       branches:
       - main
   pull_request:
