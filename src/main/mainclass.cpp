@@ -7,7 +7,7 @@ void MainClass::recompute_flag() {
 }
 
 std::string MainClass::stringify() {
-  return "value=" + std::to_string(value) +", is_odd=" + std::to_string(is_odd);
+  return "value=" + std::to_string(value) + ", is_odd=" + std::to_string(is_odd);
 }
 
 bool MainClass::value_is_odd() {
