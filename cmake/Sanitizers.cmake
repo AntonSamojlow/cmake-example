@@ -10,38 +10,36 @@ function(enable_sanitizers
 
   # collect all enabled sanitizers
   set(SANITIZERS "")
-  message(STATUS "CMAKE_CXX_COMPILER_ID=${CMAKE_CXX_COMPILER_ID}")
   if(MSVC)
-    if(${ENABLE_SANITIZER_LEAK}
-       OR ${ENABLE_SANITIZER_UNDEFINED_BEHAVIOR}
-       OR ${ENABLE_SANITIZER_THREAD}
-       OR ${ENABLE_SANITIZER_MEMORY})
+    if(ENABLE_SANITIZER_LEAK
+       OR ENABLE_SANITIZER_UNDEFINED_BEHAVIOR
+       OR ENABLE_SANITIZER_THREAD
+       OR ENABLE_SANITIZER_MEMORY)
        message(SEND_ERROR "MSVC only supports address sanitizer")
     endif()
-    if(${ENABLE_SANITIZER_ADDRESS})
+    if(ENABLE_SANITIZER_ADDRESS)
        list(APPEND SANITIZERS "address")
     endif()
   elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    if(${ENABLE_SANITIZER_ADDRESS})
+    if(ENABLE_SANITIZER_ADDRESS)
       list(APPEND SANITIZERS "address")
     endif()
 
-    if(${ENABLE_SANITIZER_LEAK})
+    if(ENABLE_SANITIZER_LEAK)
       list(APPEND SANITIZERS "leak")
     endif()
 
-    if(${ENABLE_SANITIZER_UNDEFINED_BEHAVIOR})
+    if(ENABLE_SANITIZER_UNDEFINED_BEHAVIOR)
       list(APPEND SANITIZERS "undefined")
     endif()
 
-    if(${ENABLE_SANITIZER_THREAD})
+    if(ENABLE_SANITIZER_THREAD)
       if("address" IN_LIST SANITIZERS OR "leak" IN_LIST SANITIZERS)
         message(WARNING "Thread sanitizer does not work with Address and Leak sanitizer enabled")
       else()
         list(APPEND SANITIZERS "thread")
       endif()
     endif()
-    message(STATUS "ENABLE_SANITIZER_MEMORY=${ENABLE_SANITIZER_MEMORY}")
     if(ENABLE_SANITIZER_MEMORY AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
       message(
         WARNING
