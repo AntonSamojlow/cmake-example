@@ -6,6 +6,10 @@
 
 name: ci
 on:
+  schedule:
+    - cron: '25 18 * * SUN'
+      branches:
+      - main
   pull_request:
   push:
     branches:
@@ -77,14 +81,26 @@ jobs:
       # As used here the Developer Command Prompt created is targeting x64 and using the default the Windows SDK.
       - uses: ilammy/msvc-dev-cmd@v1
 
-      - name: Cmake Configure
+      - name: Cmake Configure ${{ matrix.configure-preset }}
         run: |
           cmake --preset ${{ matrix.configure-preset }}
 
-      - name: Cmake Build
+      - name: Cmake Build ${{ matrix.configure-preset }}
+        if: ${{ matrix.build-preset == '' }}
         run: |
           cmake --build --preset ${{ matrix.configure-preset }}
 
-      - name: Run CTest
+      - name: Cmake Build ${{ matrix.build-preset }}
+        if: ${{ matrix.build-preset != '' }}
+        run: |
+          cmake --build --preset ${{ matrix.build-preset }}
+
+      - name: Run CTest ${{ matrix.configure-preset }}
+        if: ${{ matrix.test-preset == '' }}
         run: |
           ctest --preset ${{ matrix.configure-preset }}
+
+      - name: Run CTest ${{ matrix.test-preset }}
+        if: ${{ matrix.test-preset != '' }}
+        run: |
+          ctest --preset ${{ matrix.test-preset }}
