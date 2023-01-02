@@ -72,7 +72,7 @@
 			"hidden": true,
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Release",
-				"WARNINGS_AS_ERRORS" : "True"
+				"WARNINGS_AS_ERRORS" : "False"
 			}
 		},
 
@@ -171,12 +171,14 @@
 		{
 			"name": "clang-release",
 			"displayName": "default",
-			"configurePreset": "clang-release"
+			"configurePreset": "clang-release",
+			"verbose": true
 		},
 		{
 			"name": "gcc-release",
 			"displayName": "default",
-			"configurePreset": "gcc-release"
+			"configurePreset": "gcc-release",
+			"verbose": true
 		},
 		{
 			"name": "msvc-debug",
@@ -186,7 +188,8 @@
 		{
 			"name": "msvc-debug-verbose",
 			"displayName": "verbose",
-			"configurePreset": "msvc-debug"
+			"configurePreset": "msvc-debug",
+			"verbose": true
 		},
 		{
 			"name": "clang-cl-debug",
@@ -196,7 +199,8 @@
 		{
 			"name": "clang-cl-debug-verbose",
 			"displayName": "verbose",
-			"configurePreset": "clang-cl-debug"
+			"configurePreset": "clang-cl-debug",
+			"verbose": true
 		}
 	],
 
