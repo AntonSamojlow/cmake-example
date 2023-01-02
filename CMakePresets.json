@@ -71,7 +71,8 @@
 			"name": "release",
 			"hidden": true,
 			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Release"
+				"CMAKE_BUILD_TYPE": "Release",
+				"WARNINGS_AS_ERRORS" : "True"
 			}
 		},
 

@@ -8,6 +8,7 @@ project ("cmake-example")
 set(CMAKE_CXX_STANDARD 20)
 
 include("${CMAKE_CURRENT_LIST_DIR}/cmake/Sanitizers.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/cmake/StaticAnalysis.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/cmake/Warnings.cmake")
 
 # disabled module support since it is still experimental -> references:
@@ -20,6 +21,8 @@ include("${CMAKE_CURRENT_LIST_DIR}/cmake/Warnings.cmake")
 # allows test and other libs to reference src folder directly 
 # (else all cross-project includes must start with 'src/' or '../')
 include_directories(src)
+
+enable_clang_tidy()
 
 # include sub-projects
 add_subdirectory (src/mylibrary)
