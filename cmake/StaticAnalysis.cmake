@@ -7,6 +7,11 @@ macro(enable_clang_tidy)
   if(NOT CLANGTIDY)
     message(FATAL_ERROR "clang-tidy requested but executable not found. Consider disabling static analysis.")
   endif()
+   
+  message(STATUS "clang-tidy enabled (${CLANGTIDY}) using version:")
+  execute_process(COMMAND 
+    ${CLANGTIDY} --version 
+    RESULT_VARIABLE CLANGTIDY_VERSION_RESULT)
 
   # construct the clang-tidy command line
   set(CMAKE_CXX_CLANG_TIDY ${CLANGTIDY} -extra-arg=-Wno-unknown-warning-option)
