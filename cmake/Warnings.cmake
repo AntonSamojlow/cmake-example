@@ -121,7 +121,7 @@ function(set_default_warnings
   
   set_specific_warnings(
     ${target_name}
-    FALSE 
+    "${WARNINGS_AS_ERRORS}" 
     "${MSVC_DEFAULT_WARNINGS}"
     "${CLANG_DEFAULT_WARNINGS}" 
     "${GCC_DEFAULT_WARNINGS}")

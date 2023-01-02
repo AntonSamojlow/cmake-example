@@ -64,9 +64,9 @@ function(enable_sanitizers
 
   # set build directives accordingly
   if(NOT LIST_OF_SANITIZERS OR "${LIST_OF_SANITIZERS}" STREQUAL "")
-    message( "no SANITIZERS enabled for '${target_name}'")
+    message(STATUS "no SANITIZERS enabled for '${target_name}'")
   else()
-    message("SANITIZERS enabled for '${target_name}': ${LIST_OF_SANITIZERS}")
+    message(STATUS "SANITIZERS enabled for '${target_name}': ${LIST_OF_SANITIZERS}")
     if(NOT MSVC)
       message(STATUS "(compiler is not MSVC-like)")
       target_compile_options(${target_name} INTERFACE -fsanitize=${LIST_OF_SANITIZERS})

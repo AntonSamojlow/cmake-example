@@ -6,11 +6,11 @@
 #include "main/mainclass.h"
 #include "mylibrary/libclass.h"
 
-int use_after_free(int nr);
+int use_after_free(int index);
 
 int main() {
   // int i;
-  int j;
+  int some_number = 1;
 
   auto logger = spdlog::default_logger();
   MainClass classA = {.value = 1};
@@ -23,13 +23,15 @@ int main() {
   libclass.log();
   logger->info("libclass default values: count={}, active={}", libclass.count, libclass.active);
 
-  j = use_after_free(1);
+  some_number = use_after_free(1);
 
-  return j;
+  return some_number;
 }
 
-int use_after_free(int nr) {
+// NOLINTBEGIN
+int use_after_free(int index) {
   int *array = new int[100];
   delete[] array;
-  return array[nr];  // ASAN should find this
+  return array[index];  // ASAN should find this
 }
+// NOLINTEND
