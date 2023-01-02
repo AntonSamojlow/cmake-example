@@ -7,6 +7,17 @@ project ("cmake-example")
 # set global c++ standard to c++20
 set(CMAKE_CXX_STANDARD 20)
 
+# log base compiler info
+if(CMAKE_CXX_COMPILER_LOADED)
+  message(STATUS "CMAKE_CXX_COMPILER='${CMAKE_CXX_COMPILER}'")
+  message(STATUS "CMAKE_CXX_COMPILER_ID='${CMAKE_CXX_COMPILER_ID}'")
+  message(STATUS 
+  "CMAKE_CXX_COMPILER_VERSION='${CMAKE_CXX_COMPILER_VERSION}'")
+  message(STATUS 
+  "CMAKE_COMPILER_IS_GNUCXX='${CMAKE_COMPILER_IS_GNUCXX}'")
+endif()
+
+
 include("${CMAKE_CURRENT_LIST_DIR}/cmake/Sanitizers.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/cmake/StaticAnalysis.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/cmake/Warnings.cmake")
