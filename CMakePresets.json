@@ -267,12 +267,11 @@
 			"name": "gcc-release",
 			"configurePreset": "gcc-release",
 			"inherits": [ "base" ]
-		}
+		},
 		{
 			"name": "gcc-release-notidy",
 			"configurePreset": "gcc-release-notidy",
 			"inherits": [ "base" ]
 		}
-
 	]
 }
