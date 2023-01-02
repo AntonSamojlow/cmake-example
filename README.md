@@ -8,8 +8,6 @@ And then add linux build support by moving the build to docker.
 
 ## Requirements & dependencies
 - cmake 3.24 + VS2022
-- vcpkg installed and configure for cmake (env variable CMAKE_TOOLCHAIN_FILE set) 
-    - or another package manager, with corresponding config: see [vcpkg.json](/vcpkg.json) for the used dependencies
 - due to [this bug](https://github.com/microsoft/vcpkg/issues/15623), on Windows it is recommended to set environment variable `VcpkgAutoLink` to `false`
 - when using vscode with cmake and ninja as generator on windows: open vscode from the corresponding dev command prompt,
     this would be the "x64 native tools command prompt" (currently no x86 build configured). 
