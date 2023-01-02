@@ -14,8 +14,12 @@ macro(enable_clang_tidy)
     RESULT_VARIABLE CLANGTIDY_VERSION_RESULT)
 
   # construct the clang-tidy command line
-  set(CMAKE_CXX_CLANG_TIDY ${CLANGTIDY} -extra-arg=-Wno-unknown-warning-option)
-  # set all warnings as errors, if enabled
+  # adding -Wno-error=unused-command-line-argument due to https://github.com/llvm/llvm-project/issues/53674
+  # (which appeared on github with clang-tidy 14.0.6 but not locally with 15.0.1)
+  set(CMAKE_CXX_CLANG_TIDY ${CLANGTIDY} 
+    "-extra-arg=-Wno-unknown-warning-option;-Wno-error=unused-command-line-argument")
+  
+    # set all warnings as errors, if enabled
   if(${WARNINGS_AS_ERRORS})
     message(STATUS "enable_clang_tidy_globally: WARNINGS_AS_ERRORS enabled")
     list(APPEND CMAKE_CXX_CLANG_TIDY -warnings-as-errors=*)
