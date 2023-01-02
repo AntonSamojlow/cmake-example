@@ -39,18 +39,36 @@
 			"hidden": true,
 			"inherits": "base",
 			"condition": {
-                "type": "inList",
-                "string": "${hostSystemName}",
-                "list": [
-                    "Linux",
-                    "Darwin"
-                ]
-            },
-            "vendor": {
-                "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
-                    "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
-                }
-            }
+				"type": "inList",
+				"string": "${hostSystemName}",
+				"list": [
+					"Linux",
+					"Darwin"
+				]
+			},
+			"vendor": {
+				"microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+					"sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
+				}
+			}
+		},
+
+		{
+			"name": "debug",
+			"hidden": true,
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug",
+				"ENABLE_CLANG_TIDY": true
+			}
+		},
+		{
+			"name": "release",
+			"hidden": true,
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Release",
+				"ENABLE_CLANG_TIDY": true,
+				"WARNINGS_AS_ERRORS": true
+			}
 		},
 
 		{
@@ -61,20 +79,13 @@
 			}
 		},
 		{
-			"name": "debug",
+			"name": "notidy",
 			"hidden": true,
 			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Debug"
+				"ENABLE_CLANG_TIDY": false
 			}
 		},
-		{
-			"name": "release",
-			"hidden": true,
-			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Release",
-				"WARNINGS_AS_ERRORS" : "False"
-			}
-		},
+
 
 		{
 			"name": "clang-cl",
@@ -117,12 +128,12 @@
 		{
 			"name": "msvc-debug",
 			"displayName": "MSVC Debug",
-			"inherits": [ "windows", "msvc", "debug" ]
+			"inherits": [ "windows", "msvc", "debug"]
 		},
 		{
 			"name": "msvc-release",
 			"displayName": "MSVC Release",
-			"inherits": [ "windows", "msvc", "release" ]
+			"inherits": [ "windows", "msvc", "release"]
 		},
 		{
 			"name": "msvc-asan",
@@ -132,12 +143,12 @@
 		{
 			"name": "clang-cl-debug",
 			"displayName": "ClangCl Debug",
-			"inherits": [ "windows", "clang-cl", "debug" ]
+			"inherits": [ "windows", "clang-cl", "debug"]
 		},
 		{
 			"name": "clang-cl-release",
 			"displayName": "ClangCl Release",
-			"inherits": [ "windows", "clang-cl", "release" ]
+			"inherits": [ "windows", "clang-cl", "release"]
 		},
 		{
 			"name": "clang-cl-asan",
@@ -150,10 +161,21 @@
 			"inherits": [ "unix-like", "clang", "release" ]
 		},
 		{
+			"name": "clang-release-notidy",
+			"displayName": "Clang Release",
+			"inherits": [ "notidy", "clang-release"]
+		},
+		{
 			"name": "gcc-release",
 			"displayName": "Gcc Release",
 			"inherits": [ "unix-like", "gcc", "release" ]
+		},
+		{
+			"name": "gcc-release-notidy",
+			"displayName": "Gcc Release",
+			"inherits": [ "notidy", "gcc-release"]
 		}
+
 
 	],
 
@@ -171,14 +193,23 @@
 		{
 			"name": "clang-release",
 			"displayName": "default",
-			"configurePreset": "clang-release",
-			"verbose": true
+			"configurePreset": "clang-release"
+		},
+		{
+			"name": "clang-release-notidy",
+			"displayName": "default",
+			"configurePreset": "clang-release-notidy"
 		},
 		{
 			"name": "gcc-release",
 			"displayName": "default",
-			"configurePreset": "gcc-release",
-			"verbose": true
+			"configurePreset": "gcc-release"
+		},
+
+		{
+			"name": "gcc-release-notidy",
+			"displayName": "default",
+			"configurePreset": "gcc-release-notidy"
 		},
 		{
 			"name": "msvc-debug",
@@ -215,22 +246,32 @@
 		{
 			"name": "msvc-release",
 			"configurePreset": "msvc-release",
-			"inherits": ["base"]
+			"inherits": [ "base" ]
 		},
 		{
 			"name": "clang-cl-release",
 			"configurePreset": "clang-cl-release",
-			"inherits": ["base"]
+			"inherits": [ "base" ]
 		},
 		{
 			"name": "clang-release",
 			"configurePreset": "clang-release",
-			"inherits": ["base"]
+			"inherits": [ "base" ]
+		},
+		{
+			"name": "clang-release-notidy",
+			"configurePreset": "clang-release-notidy",
+			"inherits": [ "base" ]
 		},
 		{
 			"name": "gcc-release",
 			"configurePreset": "gcc-release",
-			"inherits": ["base"]
+			"inherits": [ "base" ]
+		}
+		{
+			"name": "gcc-release-notidy",
+			"configurePreset": "gcc-release-notidy",
+			"inherits": [ "base" ]
 		}
 
 	]

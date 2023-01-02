@@ -24,19 +24,25 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macos-latest
         configure-preset: 
           - clang-release
           - gcc-release
         
         include:
-          - os: ubuntu-latest
-            triplet: x64-linux
+            # clang-tidy seems to be missing on githubs macos images
           - os: macos-latest
             triplet: x64-osx
+            configure-preset: clang-release-notidy
+          - os: macos-latest
+            triplet: x64-osx
+            configure-preset: gcc-release-notidy
           - os: windows-latest
             triplet: x64-windows
             configure-preset: msvc-release
+            # build and test preeset names can be specified
+            # (else the configure-preset name is resued for build and test)
+            build-preset: msvc-release
+            test-preset: msvc-release
           - os: windows-latest
             triplet: x64-windows
             configure-preset: clang-cl-release

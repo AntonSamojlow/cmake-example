@@ -33,7 +33,9 @@ include("${CMAKE_CURRENT_LIST_DIR}/cmake/Warnings.cmake")
 # (else all cross-project includes must start with 'src/' or '../')
 include_directories(src)
 
-enable_clang_tidy()
+if(ENABLE_CLANG_TIDY)
+  enable_clang_tidy()
+endif()
 
 # include sub-projects
 add_subdirectory (src/mylibrary)
