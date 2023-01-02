@@ -19,7 +19,7 @@ And then add linux build support by moving the build to docker.
 
 ## Current goals
 - compile on windows with both clang and msvc, and ninja as build-generator
-    - currently, without module support since this is tioll lacking when using clang or msvc with ninja
+    - currently, without module support since this is still lacking support, i.p. when using clang or msvc with ninja
 - setup github ci
 - add preset for sanitizers and all warnings enabled
 - move build to docker, both for win and linux containers

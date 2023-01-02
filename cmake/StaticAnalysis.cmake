@@ -1,5 +1,7 @@
 ﻿include_guard()
 
+# TODO: Implement other static analysis, like msvc (only for msvc) and cppcheck (requires tool installed)
+
 # Enable static analysis with clang-tidy
 macro(enable_clang_tidy)
 
