@@ -58,7 +58,7 @@
 			"hidden": true,
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug",
-				"ENABLE_CLANG_TIDY": true
+				"ENABLE_CLANG_TIDY": false
 			}
 		},
 		{

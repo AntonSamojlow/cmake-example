@@ -6,10 +6,10 @@ void MainClass::recompute_flag() {
   is_odd = value_is_odd();
 }
 
-std::string MainClass::stringify() {
-  return "value=" + std::to_string(value) + ", is_odd=" + std::to_string(is_odd);
+std::string MainClass::stringify() const {
+  return "value=" + std::to_string(value) + ", is_odd=" + (is_odd ? "true" : "false");
 }
 
-bool MainClass::value_is_odd() {
+bool MainClass::value_is_odd() const {
   return value % 2 == 1;
 }
