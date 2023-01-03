@@ -176,7 +176,6 @@
 			"inherits": [ "notidy", "gcc-release"]
 		}
 
-
 	],
 
 	"buildPresets": [
@@ -186,46 +185,10 @@
 			"configurePreset": "msvc-release"
 		},
 		{
-			"name": "clang-cl-release",
-			"displayName": "default",
-			"configurePreset": "clang-cl-release"
-		},
-		{
-			"name": "clang-release",
-			"displayName": "default",
-			"configurePreset": "clang-release"
-		},
-		{
-			"name": "clang-release-notidy",
-			"displayName": "default",
-			"configurePreset": "clang-release-notidy"
-		},
-		{
-			"name": "gcc-release",
-			"displayName": "default",
-			"configurePreset": "gcc-release"
-		},
-
-		{
-			"name": "gcc-release-notidy",
-			"displayName": "default",
-			"configurePreset": "gcc-release-notidy"
-		},
-		{
-			"name": "msvc-debug",
-			"displayName": "default",
-			"configurePreset": "msvc-debug"
-		},
-		{
 			"name": "msvc-debug-verbose",
 			"displayName": "verbose",
 			"configurePreset": "msvc-debug",
 			"verbose": true
-		},
-		{
-			"name": "clang-cl-debug",
-			"displayName": "default",
-			"configurePreset": "clang-cl-debug"
 		},
 		{
 			"name": "clang-cl-debug-verbose",
@@ -246,31 +209,6 @@
 		{
 			"name": "msvc-release",
 			"configurePreset": "msvc-release",
-			"inherits": [ "base" ]
-		},
-		{
-			"name": "clang-cl-release",
-			"configurePreset": "clang-cl-release",
-			"inherits": [ "base" ]
-		},
-		{
-			"name": "clang-release",
-			"configurePreset": "clang-release",
-			"inherits": [ "base" ]
-		},
-		{
-			"name": "clang-release-notidy",
-			"configurePreset": "clang-release-notidy",
-			"inherits": [ "base" ]
-		},
-		{
-			"name": "gcc-release",
-			"configurePreset": "gcc-release",
-			"inherits": [ "base" ]
-		},
-		{
-			"name": "gcc-release-notidy",
-			"configurePreset": "gcc-release-notidy",
 			"inherits": [ "base" ]
 		}
 	]
