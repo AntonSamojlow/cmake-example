@@ -17,7 +17,7 @@ on:
 
 jobs:
   job:
-    name: CI
+    name: CI (${{ matrix.os }}-${{ matrix.configure-preset }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
