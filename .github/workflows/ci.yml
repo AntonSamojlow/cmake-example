@@ -17,7 +17,7 @@ on:
 
 jobs:
   job:
-    name: ${{ matrix.os }}-${{ matrix.configure-preset }}-${{ github.workflow }}
+    name: CI
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
