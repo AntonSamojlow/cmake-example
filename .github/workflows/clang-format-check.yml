@@ -12,6 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: clang-format src
+      if: ${{ always() }}
       uses: jidicula/clang-format-action@v4.9.0
       with:
         clang-format-version: '15'
@@ -19,6 +20,7 @@ jobs:
         # exclude: '(hello|world)' # Exclude file paths containing "hello" or "world"
         exclude-regex: ''        
     - name: clang-format test
+      if: ${{ always() }}
       uses: jidicula/clang-format-action@v4.9.0
       with:
         clang-format-version: '15'
